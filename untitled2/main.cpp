@@ -1,34 +1,54 @@
-//new 연산자를 사용하여 Person 구조체를 동적으로 생성하고, name과 age 멤버 변수에 각각 "Alice"와 30을 할당하는 코드를 작성해보세요.
-//작성한 코드에서 메모리 누수가 발생하지 않도록 delete 연산자를 사용하여 메모리를 해제하는 코드를 추가해보세요.
-
 #include <iostream>
-#include <cstring>
 
-using namespace std;
-
-struct Person
+// antarctica_years_end 구조체 정의
+struct antarctica_years_end
 {
-    std::string name;
-    int age;
+    int year;
+    // 실제로는 더 많은 흥미로운 데이터가 있겠죠!
 };
 
 int main()
 {
-    // 1. Person 구조체 포인터 변수 선언
-    Person* personPtr;
+    // antarctica_years_end 구조체 변수 3개 선언
+    antarctica_years_end s01, s02, s03;
 
-    // 2. new 연산자를 사용하여 힙 메모리에 Person 구조체 생성
-    personPtr = new Person;
+    // s01 구조체의 year 멤버 변수에 1998 할당
+    s01.year = 1998;
 
-    // 3. 포인터 변수를 사용하여 구조체 멤버 변수에 접근하고 값 할당
-    personPtr->name = "Alice";
-    personPtr->age = 30;
+    // antarctica_years_end 구조체 포인터 변수 pa 선언, s02의 주소 할당
+    antarctica_years_end * pa = &s02;
 
-    // 4. 결과 출력
-    std::cout << "Name: " << personPtr->name << ", Age: " << personPtr->age << std::endl;
+    // pa 포인터를 통해 s02 구조체의 year 멤버 변수에 1999 할당
+    pa->year = 1999;
 
-    // 5. delete 연산자를 사용하여 할당된 메모리 해제
-    delete personPtr;
+    // antarctica_years_end 구조체 배열 trio 선언 (크기 3)
+    antarctica_years_end trio[3];
 
+    // trio 배열의 첫 번째 요소(trio[0])의 year 멤버 변수에 2003 할당
+    trio[0].year = 2003;
+
+    // trio 배열의 첫 번째 요소(trio[0])의 year 멤버 변수 값 출력
+    std::cout << trio->year << std::endl;
+
+    // const antarctica_years_end 구조체 포인터 배열 arp 선언 (크기 3), s01, s02, s03의 주소 할당
+    const antarctica_years_end * arp[3] = {&s01, &s02, &s03};
+
+    // arp 배열의 두 번째 요소(arp[1])가 가리키는 구조체의 year 멤버 변수 값 출력
+    std::cout << arp[1]->year << std::endl;
+
+    // const antarctica_years_end 구조체 포인터의 포인터 변수 ppa 선언, arp 배열의 시작 주소 할당
+    const antarctica_years_end ** ppa = arp;
+
+    // C++11 자동 타입 추론 기능을 사용하여 ppb 변수 선언, arp 배열의 시작 주소 할당
+    auto ppb = arp;
+    // 또는 명시적으로 const antarctica_years_end ** ppb = arp; 로 선언할 수도 있음
+
+    // ppa가 가리키는 포인터가 가리키는 구조체의 year 멤버 변수 값 출력 (즉, arp[0]->year)
+    std::cout << (*ppa)->year << std::endl;
+
+    // ppb + 1 (즉, arp[1])이 가리키는 포인터가 가리키는 구조체의 year 멤버 변수 값 출력
+    std::cout << (*(ppb+1))->year << std::endl;
+
+    // std::cin.get();
     return 0;
 }
